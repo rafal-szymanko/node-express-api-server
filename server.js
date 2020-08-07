@@ -45,6 +45,19 @@ app.get('/testimonials/:id', (req, res) => {
     }
 });
 
+app.post('/testimonials', (req, res) => {
+
+    const { author, text } = req.body;
+    const postData = {
+        id: db.length + 1,
+        author: author,
+        text: text,
+    };
+    db.push(postData);
+    console.log(db);
+    
+    res.send({message: "ok"});
+});
 
 
 app.listen(port, () => {
