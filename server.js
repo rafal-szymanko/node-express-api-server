@@ -1,102 +1,244 @@
 const express = require('express');
+const db = require('./db');
+
 const app = express();
 const port = 3000;
 
-app.use(express.urlencoded({
-    extended: false
-}));
+const testimonialsRoutes = require('./routes/testimonials.routes');
+const concertRoutes = require('./routes/concerts.routes');
+const seatsRoutes = require('./routes/seats.routes');
+
+app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 
-const db = [{
-        id: 1,
-        author: 'John Doe',
-        text: 'This company is worth every coin!'
-    },
-    {
-        id: 2,
-        author: 'Amanda Doe',
-        text: 'They really know how to make you happy.'
-    },
-];
 
-app.get('/', (req, res) => {
-    res.send('Hello World');
-});
+app.use('/', testimonialsRoutes); // add post routes to server
+app.use('/', concertRoutes); // add user routes to server
+app.use('/', seatsRoutes); // add user routes to server
 
-app.get('/testimonials', (req, res) => {
-    res.send(db);
-});
+// app.get('/', (req, res) => {
+//     res.send('Hello World');
+// });
 
-app.get('/testimonials/random', (req, res) => {
-    const randomId = Math.floor(Math.random() * (db.length - 1 + 1) + 1);
+// app.get('/testimonials', (req, res) => {
+//     res.send(db.testimonials);
+// });
 
-    const renderData = db.find(item => item.id == randomId);
+// app.get('/testimonials/random', (req, res) => {
+//     const randomId = Math.floor(Math.random() * (db.testimonials.length - 1 + 1) + 1);
 
-    res.send(renderData);
-});
+//     const renderData = db.testimonials.find(item => item.id == randomId);
 
-app.get('/testimonials/:id', (req, res) => {
-    const renderData = db.find(item => item.id == req.params.id);
+//     res.send(renderData);
+// });
 
-    if (renderData) {
-        res.send(renderData);
-    } else {
-        res.status(404).send('404 not found...');
-    }
-});
+// app.get('/testimonials/:id', (req, res) => {
+//     const renderData = db.testimonials.find(item => item.id == req.params.id);
 
-app.post('/testimonials', (req, res) => {
-    const {
-        author,
-        text
-    } = req.body;
+//     if (renderData) {
+//         res.send(renderData);
+//     } else {
+//         res.status(404).send('404 not found...');
+//     }
+// });
 
-    const postData = {
-        id: db.length + 1,
-        author: author,
-        text: text,
-    };
+// app.post('/testimonials', (req, res) => {
+//     const {
+//         author,
+//         text
+//     } = req.body;
 
-    db.push(postData);
+//     const postData = {
+//         id: db.testimonials.length + 1,
+//         author: author,
+//         text: text,
+//     };
 
-    res.send({
-        message: "ok"
-    });
-});
+//     db.testimonials.push(postData);
+
+//     res.send({
+//         message: "ok"
+//     });
+// });
 
 
-app.put('/testimonials/:id', (req, res) => {
-    const {
-        author,
-        text
-    } = req.body;
+// app.put('/testimonials/:id', (req, res) => {
+//     const {
+//         author,
+//         text
+//     } = req.body;
 
-    const index = db.findIndex(item => item.id == req.params.id);
+//     const index = db.testimonials.findIndex(item => item.id == req.params.id);
 
-    db.splice(index, 1, {
-        id: Number(req.params.id),
-        author: author,
-        text: text,
-    });
+//     db.testimonials.splice(index, 1, {
+//         id: Number(req.params.id),
+//         author: author,
+//         text: text,
+//     });
 
-    res.send({
-        message: "ok"
-    });
-    console.log(db);
+//     res.send({
+//         message: "ok"
+//     });
+// });
 
-});
+// app.delete('/testimonials/:id', (req, res) => {
+//     const index = db.testimonials.findIndex(item => item.id == req.params.id);
 
-app.delete('/testimonials/:id', (req, res) => {
-    const index = db.findIndex(item => item.id == req.params.id);
+//     db.testimonials.splice(index, 1);
 
-    db.splice(index, 1);
-
-    res.send({
-        message: "ok"
-    });
-});
+//     res.send({
+//         message: "ok"
+//     });
+// });
 
 
+// app.get('/concerts', (req, res) => {
+//     res.send(db.concerts);
+// });
+
+
+// app.get('/concerts/:id', (req, res) => {
+//     const renderData = db.concerts.find(item => item.id == req.params.id);
+
+//     if (renderData) {
+//         res.send(renderData);
+//     } else {
+//         res.status(404).send('404 not found...');
+//     }
+// });
+
+// app.post('/concerts', (req, res) => {
+//     const {
+//         performer,
+//         genre,
+//         price,
+//         day,
+//         image,
+//     } = req.body;
+
+//     const postData = {
+//         id: db.concerts.length + 1,
+//         performer: performer,
+//         genre: genre,
+//         price: Number(price),
+//         day: Number(day),
+//         image: image,
+//     };
+
+//     db.concerts.push(postData);
+
+//     res.send({
+//         message: "ok"
+//     });
+// });
+
+
+// app.put('/concerts/:id', (req, res) => {
+//     const {
+//         performer,
+//         genre,
+//         price,
+//         day,
+//         image,
+//     } = req.body;
+
+//     const index = db.concerts.findIndex(item => item.id == req.params.id);
+
+//     db.concerts.splice(index, 1, {
+//         id: Number(req.params.id),
+//         performer: performer,
+//         genre: genre,
+//         price: Number(price),
+//         day: Number(day),
+//         image: image,
+//     });
+
+//     res.send({
+//         message: "ok"
+//     });
+// });
+
+// app.delete('/concerts/:id', (req, res) => {
+//     const index = db.concerts.findIndex(item => item.id == req.params.id);
+
+//     db.concerts.splice(index, 1);
+
+//     res.send({
+//         message: "ok"
+//     });
+// });
+
+// app.get('/seats', (req, res) => {
+//     res.send(db.seats);
+// });
+
+
+// app.get('/seats/:id', (req, res) => {
+//     const renderData = db.seats.find(item => item.id == req.params.id);
+
+//     if (renderData) {
+//         res.send(renderData);
+//     } else {
+//         res.status(404).send('404 not found...');
+//     }
+// });
+
+// app.post('/seats', (req, res) => {
+//     const {
+//         day,
+//         seat,
+//         client,
+//         email,
+//     } = req.body;
+
+//     const postData = {
+//         id: db.seats.length + 1,
+//         day: Number(day),
+//         seat: Number(seat),
+//         client: client,
+//         email: email,
+//     };
+
+//     db.seats.push(postData);
+
+//     res.send({
+//         message: "ok"
+//     });
+// });
+
+
+// app.put('/seats/:id', (req, res) => {
+//     const {
+//         day,
+//         seat,
+//         client,
+//         email,
+//     } = req.body;
+
+//     const index = db.seats.findIndex(item => item.id == req.params.id);
+
+//     db.seats.splice(index, 1, {
+//         id: Number(req.params.id),
+//         day: Number(day),
+//         seat: Number(seat),
+//         client: client,
+//         email: email,
+//     });
+
+//     res.send({
+//         message: "ok"
+//     });
+// });
+
+// app.delete('/seats/:id', (req, res) => {
+//     const index = db.seats.findIndex(item => item.id == req.params.id);
+
+//     db.seats.splice(index, 1);
+
+//     res.send({
+//         message: "ok"
+//     });
+// });
 
 app.use((req, res) => {
     res.status(404).send({
