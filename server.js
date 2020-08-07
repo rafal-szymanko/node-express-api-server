@@ -30,7 +30,7 @@ app.get('/testimonials', (req, res) => {
 app.get('/testimonials/random', (req, res) => {
     const randomId = Math.floor(Math.random() * (db.length - 1 + 1) + 1);
 
-    const renderData= db.find(item => item.id == randomId);
+    const renderData = db.find(item => item.id == randomId);
 
     res.send(renderData);
 });
@@ -46,18 +46,63 @@ app.get('/testimonials/:id', (req, res) => {
 });
 
 app.post('/testimonials', (req, res) => {
+    const {
+        author,
+        text
+    } = req.body;
 
-    const { author, text } = req.body;
     const postData = {
         id: db.length + 1,
         author: author,
         text: text,
     };
+
     db.push(postData);
-    console.log(db);
-    
-    res.send({message: "ok"});
+
+    res.send({
+        message: "ok"
+    });
 });
+
+
+app.put('/testimonials/:id', (req, res) => {
+    const {
+        author,
+        text
+    } = req.body;
+
+    const index = db.findIndex(item => item.id == req.params.id);
+
+    db.splice(index, 1, {
+        id: Number(req.params.id),
+        author: author,
+        text: text,
+    });
+
+    res.send({
+        message: "ok"
+    });
+    console.log(db);
+
+});
+
+app.delete('/testimonials/:id', (req, res) => {
+    const index = db.findIndex(item => item.id == req.params.id);
+
+    db.splice(index, 1);
+
+    res.send({
+        message: "ok"
+    });
+});
+
+
+
+app.use((req, res) => {
+    res.status(404).send({
+        message: 'Not found...'
+    });
+})
 
 
 app.listen(port, () => {
