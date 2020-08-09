@@ -20,6 +20,8 @@ router.route('/seats/:id').get((req, res) => {
 });
 
 router.route('/seats').post((req, res) => {
+
+  
   const {
     day,
     seat,
@@ -35,11 +37,19 @@ router.route('/seats').post((req, res) => {
     email: email,
   };
 
-  db.seats.push(postData);
+  const isBooked = db.seats.filter(item => item.day === day && item.seat === seat);
 
-  res.send({
-    message: "ok"
-  });
+  if (isBooked == false) {
+    db.seats.push(postData);
+
+    res.send({
+      message: "ok"
+    });
+  } else {
+    res.send({
+      message: "The slot is already taken..."
+    });
+  }
 });
 
 router.route('/seats/:id').put((req, res) => {
