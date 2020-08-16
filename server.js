@@ -2,6 +2,8 @@ const express = require('express');
 const db = require('./db');
 const cors = require('cors')
 const path = require('path');
+const socket = require('socket.io');
+
 
 
 const app = express();
@@ -34,6 +36,24 @@ app.use((req, res) => {
   });
 })
 
-app.listen(process.env.PORT || 8000, () => {
+const server = app.listen(process.env.PORT || 8000, () => {
   console.log(`Example app listening at http://localhost:8000`);
+});
+
+
+const io = socket(server);
+
+io.on('connection', (socket) => {
+    console.log('New socket');
+  // socket.on('addTask', (data) => {
+  //   tasks.push(data);
+  //   socket.broadcast.emit('addTask', {name: data.name, id: data.id});
+  // });
+
+  // socket.on('removeTask', (taskId) => {
+  //   const isLocal = false;
+  //   tasks.splice(taskId, 1);
+  //   socket.broadcast.emit('removeTask', {id: taskId, isLocal});
+  // });
+  // socket.on('disconnect', () => {});
 });
