@@ -41,7 +41,8 @@ router.route('/seats').post((req, res) => {
 
   if (isBooked == false) {
     db.seats.push(postData);
-
+    console.log(req);
+    req.io.emit('seatsUpdated', db.seats);
     res.send({
       message: "ok"
     });
