@@ -37,7 +37,8 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/build/index.html'));
 });
 
-mongoose.connect('mongodb://localhost:27017/NewWaveDB', { useNewUrlParser: true });
+
+mongoose.connect('mongodb+srv://rszymanko:tGqwwNSvOy4bkuYq@cluster0.pefni.mongodb.net/<NewWaveDB>?retryWrites=true&w=majority', { useNewUrlParser: true });
 const db = mongoose.connection;
 
 db.once('open', () => {
