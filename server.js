@@ -3,8 +3,7 @@ const db = require('./db');
 const cors = require('cors')
 const path = require('path');
 const socket = require('socket.io');
-
-
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -25,21 +24,27 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.use('/api', testimonialsRoutes);
 app.use('/api', concertRoutes);
 app.use('/api', seatsRoutes);
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/build/index.html'));
-});
-
 
 app.use((req, res) => {
   res.status(404).send({
     message: 'Not found...'
   });
 })
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
+
+mongoose.connect('mongodb://localhost:27017/NewWaveDB', { useNewUrlParser: true });
+const db = mongoose.connection;
+
+db.once('open', () => {
+  console.log('Connected to the database');
+});
+db.on('error', err => console.log('Error ' + err));
 
 const server = app.listen(process.env.PORT || 8000, () => {
   console.log(`Example app listening at http://localhost:8000`);
@@ -50,15 +55,4 @@ const io = socket(server);
 
 io.on('connection', (socket) => {
     console.log('New socket');
-  // socket.on('addTask', (data) => {
-  //   tasks.push(data);
-  //   socket.broadcast.emit('addTask', {name: data.name, id: data.id});
-  // });
-
-  // socket.on('removeTask', (taskId) => {
-  //   const isLocal = false;
-  //   tasks.splice(taskId, 1);
-  //   socket.broadcast.emit('removeTask', {id: taskId, isLocal});
-  // });
-  // socket.on('disconnect', () => {});
 });
