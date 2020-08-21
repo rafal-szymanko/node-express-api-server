@@ -1,5 +1,4 @@
 const express = require('express');
-const db = require('./db');
 const cors = require('cors')
 const path = require('path');
 const socket = require('socket.io');
