@@ -38,7 +38,7 @@ app.get('*', (req, res) => {
 });
 
 
-mongoose.connect('mongodb+srv://rszymanko:tGqwwNSvOy4bkuYq@cluster0.pefni.mongodb.net/<NewWaveDB>?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://rszymanko:cPPECFZIiyFK1TJf@cluster0.pefni.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true });
 const db = mongoose.connection;
 
 db.once('open', () => {
