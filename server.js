@@ -33,8 +33,11 @@ app.use((req, res) => {
   });
 })
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
+  if (!url.startsWith('/app/')) // we're on local windows
+  url = url.substring(1);
+  res.sendFile(url);
 });
 
 

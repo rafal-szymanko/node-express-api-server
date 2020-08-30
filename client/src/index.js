@@ -11,7 +11,7 @@ import './styles/global.scss';
 
 const Root = () => (
   <Provider store={store}>
-    <Router>
+    <Router basename="/">
       <App />
     </Router>
   </Provider>
