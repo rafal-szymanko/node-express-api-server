@@ -16,26 +16,27 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(cors());
 
+app.use('/api', testimonialsRoutes);
+app.use('/api', concertRoutes);
+app.use('/api', seatsRoutes);
+
+
 app.use(express.static(path.join(__dirname, '/client/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
+
 
 app.use((req, res, next) => {
   req.io = io;
   next();
 });
 
-app.use('/api', testimonialsRoutes);
-app.use('/api', concertRoutes);
-app.use('/api', seatsRoutes);
-
 app.use((req, res) => {
   res.status(404).send({
     message: 'Not found...'
   });
 })
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/build/index.html'));
-});
 
 
 mongoose.connect('mongodb+srv://rszymanko:cPPECFZIiyFK1TJf@cluster0.pefni.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true });
