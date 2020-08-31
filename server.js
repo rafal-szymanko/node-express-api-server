@@ -39,8 +39,8 @@ app.use((req, res) => {
 })
 
 
-// mongoose.connect('mongodb+srv://rszymanko:cPPECFZIiyFK1TJf@cluster0.pefni.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true });
-mongoose.connect('mongodb://localhost:27017/NewWaveDB', { useNewUrlParser: true, useFindAndModify: false });
+mongoose.connect('mongodb+srv://rszymanko:cPPECFZIiyFK1TJf@cluster0.pefni.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true });
+// mongoose.connect('mongodb://localhost:27017/NewWaveDB', { useNewUrlParser: true, useFindAndModify: false });
 const db = mongoose.connection;
 
 db.once('open', () => {
