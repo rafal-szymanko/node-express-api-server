@@ -2,8 +2,25 @@ const Concert = require('../models/concert.model');
 const Seats = require('../models/seat.model');
 
 exports.getAllConcerts = async (req, res) => {
+
+    let concerts = await Concert.find();
+
+
     try {
-        res.json(await Concert.find());
+        updateTickets = async (id) => {
+            const bookedSeats = await Seats.find({concertID: id});
+            let availableSeats = 50 - bookedSeats.length;
+            let filter = {id: id};
+            await Concert.findOneAndUpdate(filter, {tickets: availableSeats});
+        }
+
+        for( concert of concerts) {
+            updateTickets(concert.id);
+        }
+
+        res.send(await Concert.find());
+
+
     } catch (err) {
         res.status(500).json({
             message: err
@@ -14,16 +31,19 @@ exports.getAllConcerts = async (req, res) => {
 exports.getConcertByID = async (req, res) => {
     try {
 
-        const bookedSeats = await Seats.find({concertID: Number(req.params.id)});
+        // const bookedSeats = await Seats.find({concertID: Number(req.params.id)});
 
-        const maxSeats = 50;
-        const availableSeats = maxSeats - bookedSeats.length;
+        // const maxSeats = 50;
+        // const availableSeats = maxSeats - bookedSeats.length;
 
-        const filter = {id: req.params.id};
-        const update = {tickets: availableSeats};
+        // const filter = {id: req.params.id};
+        // const update = {tickets: availableSeats};
 
-        let concert = await Concert.findOneAndUpdate(filter, update);
-        concert = await Concert.findOne(filter);
+        // let concert = await Concert.findOneAndUpdate(filter, update);
+        // concert = await Concert.findOne(filter);
+
+        const concert = await Concert.findOne({id: req.params.id});
+
 
         if(concert) {
             res.json(concert);
