@@ -15,14 +15,16 @@ exports.getConcertByID = async (req, res) => {
     try {
 
         const bookedSeats = await Seats.find({concertID: Number(req.params.id)});
-        const bookedSeatsLength = bookedSeats.length;
 
-        const filter = {id: req.params.id}; 
-        const update = {tickets: bookedSeats.length};
+        const maxSeats = 50;
+        const availableSeats = maxSeats - bookedSeats.length;
+
+        const filter = {id: req.params.id};
+        const update = {tickets: availableSeats};
 
         let concert = await Concert.findOneAndUpdate(filter, update);
         concert = await Concert.findOne(filter);
-        
+
         if(concert) {
             res.json(concert);
         } else {
