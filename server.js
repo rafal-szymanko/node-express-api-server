@@ -4,6 +4,8 @@ const path = require('path');
 const socket = require('socket.io');
 const mongoose = require('mongoose');
 
+
+
 const app = express();
 
 const testimonialsRoutes = require('./routes/testimonials.routes');
@@ -27,6 +29,9 @@ app.get('*', (req, res) => {
 });
 
 
+console.log(process.env)
+
+
 app.use((req, res, next) => {
   req.io = io;
   next();
@@ -39,7 +44,7 @@ app.use((req, res) => {
 })
 
 
-mongoose.connect('mongodb+srv://rszymanko:cPPECFZIiyFK1TJf@cluster0.pefni.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect(`mongodb+srv://${process.env.test}`, { useNewUrlParser: true });
 // mongoose.connect('mongodb://localhost:27017/NewWaveDB', { useNewUrlParser: true, useFindAndModify: false });
 const db = mongoose.connection;
 

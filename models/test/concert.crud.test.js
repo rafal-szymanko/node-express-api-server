@@ -66,9 +66,9 @@ describe('Employee', ()=> {
 
     it('should return all the data with "find" method', async () => {
 
-      const employees = await Concert.find();
+      const concerts = await Concert.find();
       const expectedLength = 2;
-      expect(employees.length).to.be.equal(expectedLength);
+      expect(concerts.length).to.be.equal(expectedLength);
     });
 
   });
