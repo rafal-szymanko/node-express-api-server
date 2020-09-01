@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "build": "cd client && yarn install && yarn build",
-    "test": "mocha \"./{,!(node_modules)/**/}*.test.js\""
+    "test": "mocha --watch \"./**/*.test.js\""
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "cors": "^2.8.5",
     "express": "4.17.1",
     "mocha": "6.2.1",
+    "mongodb-memory-server": "^6.6.7",
     "mongoose": "^5.10.0",
     "socket.io": "^2.3.0"
   }

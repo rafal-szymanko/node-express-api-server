@@ -25,9 +25,6 @@ const concertsSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    tickets: {
-        type: Number,
-    }
 });
 
 
