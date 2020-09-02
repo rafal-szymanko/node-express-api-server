@@ -1,5 +1,5 @@
 const Testimonial = require('../models/testimonial.model');
-var sanitize = require('mongo-sanitize');
+const sanitize = require('mongo-sanitize');
 
 
 exports.getAllTestimonials = async (req, res) => {
