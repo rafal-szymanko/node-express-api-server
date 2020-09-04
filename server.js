@@ -50,9 +50,6 @@ const dbURI = process.env.NODE_ENV === 'production' ? `mongodb+srv://rszymanko:c
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
-// mongoose.connect(`mongodb+srv://${process.env.test}`, { useNewUrlParser: true });
-// mongoose.connect('mongodb://localhost:27017/NewWaveDB', { useNewUrlParser: true, useFindAndModify: false });
-// const db = mongoose.connection;
 
 db.once('open', () => {
   console.log('Connected to the database');
