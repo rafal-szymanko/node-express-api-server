@@ -17,7 +17,6 @@ exports.getConcertByID = async (req, res) => {
     try {
 
         const concert = await Concert.findOne({id: req.params.id});
-
         if(concert) {
             res.json(concert);
         } else {
@@ -32,10 +31,9 @@ exports.getConcertByID = async (req, res) => {
 exports.getConcertByPerformer = async (req, res) => {
     try {
         const performer = formatFullname(req.params.performer);
-        const concerts = await Concert.find({performer: performer});
-
-        if(concerts) {
-            res.json(concerts);
+        const concert = await Concert.find({performer: performer});
+        if(concert) {
+            res.json(concert);
         } else {
             res.status(404).json({message: 'Not found...'});
         }
@@ -78,7 +76,6 @@ exports.getConcertByDay = async (req, res) => {
 };
 
 exports.getConcertByPrice = async (req, res) => {
-        console.log(req.params)
     try {
         const concerts = await Concert.find({
             price: {

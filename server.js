@@ -45,7 +45,8 @@ app.use((req, res) => {
   });
 })
 
-const dbURI = process.env.NODE_ENV === 'production' ? `mongodb+srv://${process.env.test}` : 'mongodb://localhost:27017/NewWaveDB';
+const dbURI = process.env.NODE_ENV === 'production' ? `mongodb+srv://rszymanko:cPPECFZIiyFK1TJf@cluster0.pefni.mongodb.net/NewWaveDB?retryWrites=true` : 'mongodb://localhost:27017/NewWaveDB';
+// const dbURI = process.env.NODE_ENV === 'production' ? `mongodb+srv://${process.env.test}` : 'mongodb://localhost:27017/NewWaveDB';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
@@ -68,3 +69,6 @@ const io = socket(server);
 io.on('connection', (socket) => {
     console.log('New socket');
 });
+
+
+module.exports = server;
